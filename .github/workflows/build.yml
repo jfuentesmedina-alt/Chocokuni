@@ -1,0 +1,39 @@
+name: Build ChocoCraftPaper
+
+on:
+  push:
+    branches: [ "**" ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Install FreeMinecraftModels jar as local Maven dependency
+        run: >
+          mvn -B install:install-file
+          -Dfile=libs/freeminecraftmodels.jar
+          -DgroupId=com.magmaguy
+          -DartifactId=freeminecraftmodels
+          -Dversion=local
+          -Dpackaging=jar
+
+      - name: Build plugin
+        run: mvn -B clean package
+
+      - name: Upload compiled plugin
+        uses: actions/upload-artifact@v4
+        with:
+          name: chococraft-paper-jar
+          path: target/*.jar
+          if-no-files-found: error
