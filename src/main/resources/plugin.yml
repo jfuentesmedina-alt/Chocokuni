@@ -1,0 +1,28 @@
+name: ChocoCraftPaper
+version: '${project.version}'
+main: com.jaimechococraft.paper.ChocoCraftPlugin
+# Ajusta esto a la serie de tu servidor (revisa "Implementing API version ..." en el log de arranque).
+api-version: '1.21'
+author: JaimeChocoCraft
+description: >
+  Chocobos jugables (razas, silla, doma, cria y crecimiento) sobre Paper,
+  usando FreeMinecraftModels como motor visual y compatibles con Java y Bedrock via Geyser/Floodgate.
+
+depend: [FreeMinecraftModels]
+softdepend: [Geyser-Spigot, floodgate]
+
+commands:
+  chococraft:
+    description: Comando principal de ChocoCraft
+    aliases: [choco, jchoco]
+    usage: /<command> <spawn|give|races|reload>
+    permission: chococraft.use
+    permission-message: No tienes permiso para usar este comando.
+
+permissions:
+  chococraft.use:
+    description: Permite usar /chococraft
+    default: true
+  chococraft.admin:
+    description: Permite spawnear, dar items y recargar la config
+    default: op

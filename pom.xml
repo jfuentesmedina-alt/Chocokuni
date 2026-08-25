@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jaimechococraft</groupId>
+    <artifactId>chococraft-paper</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--
+          IMPORTANTE - AJUSTA ESTO:
+          Tu server corre Minecraft 26.x (versionado nuevo de Mojang, posterior a mi fecha de
+          corte de conocimiento). No pude verificar en vivo cuál es el artefacto exacto de
+          Paper-API publicado para 26.2 porque este sandbox no tiene acceso a repo.papermc.io.
+          Entra a https://papermc.io/downloads/paper , mira la versión exacta que estás corriendo
+          en el server (la que imprime al arrancar: "This server is running Paper version ...")
+          y pon aquí la misma, con sufijo -R0.1-SNAPSHOT.
+        -->
+        <paper.api.version>1.21.11-R0.1-SNAPSHOT</paper.api.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper.api.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--
+          FreeMinecraftModels no publica su API en un repositorio Maven público remoto:
+          se compila contra el jar del plugin instalado en tu propio server.
+          Pasos (una sola vez, en TU máquina con acceso a internet normal):
+            mvn install:install-file -Dfile=freeminecraftmodels.jar \
+                -DgroupId=com.magmaguy -DartifactId=freeminecraftmodels \
+                -Dversion=local -Dpackaging=jar
+        -->
+        <dependency>
+            <groupId>com.magmaguy</groupId>
+            <artifactId>freeminecraftmodels</artifactId>
+            <version>local</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
+        <defaultGoal>package</defaultGoal>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

@@ -1,0 +1,105 @@
+# ChocoCraftPaper - configuracion
+#
+# Cada raza necesita un modelo adulto y uno de cria ya cargados en FMM
+# (plugins/FreeMinecraftModels/models/<modelo>/). El unico modelo que ya tienes
+# es el amarillo (jaime_chocobo_yellow.bbmodel -> modelo "JaimeChocoCraft").
+# Para el resto de razas exporta un .bbmodel nuevo por color desde Blockbench
+# (puedes partir del mismo jaime_chocobo_yellow.bbmodel y solo recolorear la
+# textura) e instalalo en FMM con un ID distinto; luego cambia "model-adult" /
+# "model-baby" abajo para que apunte a ese ID. Mientras no exista el modelo,
+# esa raza queda deshabilitada automaticamente (se avisa en consola al arrancar).
+
+settings:
+  # Plantilla del comando que se ejecuta por consola para pedirle a FMM que spawnee
+  # el modelo. Verifica la sintaxis real con "/fmm help" en tu version de FMM y
+  # ajustala si hace falta. Placeholders disponibles: %model% %world% %x% %y% %z%
+  spawn-command: "fmm spawn %model% %world% %x% %y% %z%"
+
+  # Radio (bloques) en el que se busca, el tick siguiente al comando anterior,
+  # el Horse recien creado para "etiquetarlo" como chocobo.
+  spawn-search-radius: 4.0
+
+  # Cada cuanto (segundos) se revisa si algun chocobo bebe ya paso a adulto.
+  growth-check-interval-seconds: 20
+
+  # Minutos reales que tarda un chocobo bebe en hacerse adulto.
+  baby-growth-time-minutes: 20
+
+  # Probabilidad (0.0 - 1.0) de domar al dar Gysahl Greens a un chocobo salvaje.
+  taming-chance: 0.35
+
+  # Si es false, solo el dueno (o un op) puede montar/alimentar su chocobo.
+  allow-riding-by-non-owners: false
+
+  # Ticks de "modo amor" aplicados al usar Gysahl Greens en un chocobo adulto domado.
+  love-mode-ticks: 600
+
+  # Ticks de cooldown de cria tras una reproduccion exitosa.
+  breed-cooldown-ticks: 6000
+
+races:
+  yellow:
+    display-name: "&eChocobo Amarillo"
+    model-adult: "JaimeChocoCraft"
+    model-baby: "JaimeChocoCraft"
+    movement-speed: 0.335
+    jump-strength: 0.7
+    weight: 100
+  black:
+    display-name: "&8Chocobo Negro"
+    model-adult: "ChocoCraft_Black"
+    model-baby: "ChocoCraft_Black"
+    movement-speed: 0.345
+    jump-strength: 0.78
+    weight: 35
+  blue:
+    display-name: "&9Chocobo Azul"
+    model-adult: "ChocoCraft_Blue"
+    model-baby: "ChocoCraft_Blue"
+    movement-speed: 0.34
+    jump-strength: 0.85
+    weight: 25
+  green:
+    display-name: "&2Chocobo Verde"
+    model-adult: "ChocoCraft_Green"
+    model-baby: "ChocoCraft_Green"
+    movement-speed: 0.33
+    jump-strength: 0.9
+    weight: 20
+  gold:
+    display-name: "&6Chocobo Dorado"
+    model-adult: "ChocoCraft_Gold"
+    model-baby: "ChocoCraft_Gold"
+    movement-speed: 0.4
+    jump-strength: 1.0
+    weight: 5
+
+items:
+  gysahl-greens:
+    material: WHEAT
+    name: "&aGysahl Greens"
+    lore:
+      - "&7Dale esto a un chocobo salvaje para domarlo,"
+      - "&7o a uno domado en modo amor para criarlo."
+  chocobo-egg:
+    material: TURTLE_EGG
+    name: "&bHuevo de Chocobo"
+    lore:
+      - "&7Coloca en el suelo (click derecho) para"
+      - "&7hacer nacer un chocobo bebe."
+
+messages:
+  prefix: "&6[ChocoCraft] &r"
+  tamed: "&a¡Domaste un chocobo!"
+  already-tamed: "&cEste chocobo ya esta domado."
+  taming-failed: "&eEl chocobo se resistio a la doma. ¡Intenta de nuevo!"
+  need-saddle: "&cEste chocobo necesita una silla antes de poder montarlo."
+  not-owner: "&cEste no es tu chocobo."
+  love-mode: "&d¡Tu chocobo esta en modo amor!"
+  bred: "&a¡Tus chocobos tuvieron una cria!"
+  spawned: "&aApareció un chocobo %race%."
+  egg-hatched: "&a¡El huevo de chocobo eclosionó!"
+  no-permission: "&cNo tienes permiso para hacer eso."
+  reloaded: "&aConfiguracion de ChocoCraft recargada."
+  unknown-race: "&cRaza desconocida: %race%. Usa /chococraft races para ver la lista."
+  race-unavailable: "&cLa raza %race% no tiene un modelo FMM valido cargado."
